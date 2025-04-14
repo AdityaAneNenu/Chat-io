@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat-IO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #050d1a 0%, #0a1934 50%, #050d1a 100%);
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 50px;
+    }
+
+    .logo-container {
+      position: fixed;
+      top: 20px;
+      left: 30px;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #4A90E2;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      flex: 1;
+    }
+
+    .main-text {
+      font-size: 1.7rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: #69FF94;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      background-color: #1A1C23;
+      border-radius: 16px;
+      padding: 1rem;
+      width: 600px;
+      max-width: 90%;
+      box-shadow: 0 0 10px rgba(74, 144, 226, 0.1);
+    }
+
+    .input-container input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      color: white;
+      padding: 0.5rem;
+    }
+
+    .icon-group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .icon {
+      background-color: #262730;
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: #ccc;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .icon.active {
+      background-color: #4A90E2;
+      color: white;
+    }
+
+    .icon:hover {
+      background-color: #3a3e4a;
+      color: white;
+    }
+
+    .send-btn {
+      background-color: #4A90E2;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .send-btn:hover {
+      background-color: #357ABD;
+    }
+
+    .response-container {
+      margin-top: 2rem;
+      background-color: #1A1C23;
+      border-radius: 16px;
+      padding: 1.5rem;
+      width: 700px;
+      max-width: 90%;
+      display: none;
+    }
+
+    .response-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #262730;
+      padding-bottom: 0.5rem;
+    }
+
+    .response-title {
+      font-weight: 600;
+      color: #4A90E2;
+    }
+
+    .response-source {
+      font-size: 0.8rem;
+      color: #69FF94;
+    }
+
+    .response-content {
+      margin-bottom: 1rem;
+    }
+
+    .response-structured {
+      background-color: #262730;
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    .loader {
+      display: none;
+      margin-top: 2rem;
+      width: 50px;
+      height: 24px;
+      background: linear-gradient(#4A90E2 0 0) left/20% 100% no-repeat,
+                  linear-gradient(#4A90E2 0 0) center/20% 100% no-repeat,
+                  linear-gradient(#4A90E2 0 0) right/20% 100% no-repeat;
+      animation: load 1s infinite;
+    }
+
+    @keyframes load {
+      0% {background-size: 20% 100%, 20% 100%, 20% 100%}
+      33% {background-size: 20% 10%, 20% 100%, 20% 100%}
+      50% {background-size: 20% 100%, 20% 10%, 20% 100%}
+      66% {background-size: 20% 100%, 20% 100%, 20% 10%}
+      100% {background-size: 20% 100%, 20% 100%, 20% 100%}
+    }
+
+    @media (max-width: 600px) {
+      .main-text {
+        font-size: 1.3rem;
+      }
+      .input-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      .icon-group {
+        width: 100%;
+        justify-content: space-around;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-container">
+    <a href="/" class="logo">🤖 Chat-IO</a>
+  </div>
+
+  <div class="main-container">
+    <div class="main-text">What can I help with?</div>
+
+    <div class="input-container">
+      <input type="text" placeholder="Ask anything..." id="query-input" />
+      <div class="icon-group">
+        <div class="icon active" data-mode="summarize">Summarize</div>
+        <div class="icon" data-mode="compare">Compare</div>
+      </div>
+      <button class="send-btn" id="send-button">➤</button>
+    </div>
+
+    <div class="loader" id="loader"></div>
+
+    <div class="response-container" id="response-container">
+      <div class="response-header">
+        <div class="response-title" id="response-title">Query Result</div>
+        <div class="response-source" id="response-source">Source: Unknown</div>
+      </div>
+      <div class="response-content" id="response-summary"></div>
+      <div class="response-structured" id="response-structured"></div>
+    </div>
+  </div>
+
+  <script>
+    // Mode selection
+    const modeButtons = document.querySelectorAll('.icon');
+    let currentMode = 'summarize';
+
+    modeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        modeButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentMode = button.getAttribute('data-mode');
+      });
+    });
+
+    // Send query
+    document.getElementById('send-button').addEventListener('click', async () => {
+      const queryInput = document.getElementById('query-input');
+      const query = queryInput.value.trim();
+      if (!query) return;
+
+      document.getElementById('loader').style.display = 'block';
+      document.getElementById('response-container').style.display = 'none';
+
+      try {
+        const response = await fetch("/api/query", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            query: query,
+            mode: currentMode
+          }),
+        });
+
+        const result = await response.json();
+        console.log("Response from server:", result);
+        
+        // Display response
+        document.getElementById('response-title').textContent = `Results for: ${query}`;
+        document.getElementById('response-source').textContent = `Source: ${result.source || 'Unknown'}`;
+        document.getElementById('response-summary').textContent = result.summary || 'No summary available';
+        document.getElementById('response-structured').textContent = 
+          JSON.stringify(result.structured_data || {}, null, 2);
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('response-container').style.display = 'block';
+
+      } catch (err) {
+        console.error("Error calling backend:", err);
+        alert("Failed to reach server. Please try again later.");
+        document.getElementById('loader').style.display = 'none';
+      }
+    });
+
+    document.getElementById('query-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('send-button').click();
+      }
+    });
+  </script>
+</body>
+</html>

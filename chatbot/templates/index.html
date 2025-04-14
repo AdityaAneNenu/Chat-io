@@ -1,5 +1,188 @@
 <!DOCTYPE html>
-<html>
-<head><title>Chatbot</title></head>
-<body></body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat-IO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #0E1117;
+      color: #CCCCCC;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #0E1117;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1f2229;
+    }
+
+    .logo {
+      color: #4A90E2;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    nav a {
+      margin-left: 20px;
+      color: #CCCCCC;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #69FF94;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      color: #4A90E2;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #AAAAAA;
+      margin: 20px 0;
+    }
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background-color: #4A90E2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin: 0 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #69FF94;
+      color: #000;
+    }
+
+    .section {
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .section h2 {
+      color: #4A90E2;
+      margin-bottom: 40px;
+    }
+
+    .features {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: #1C1F26;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 15px;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(74, 144, 226, 0.15);
+    }
+
+    .card h3 {
+      color: #69FF94;
+      margin-bottom: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      border-top: 1px solid #1f2229;
+      margin-top: 60px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">🤖 Chat-IO</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#how">How it Works</a>
+      <a href="#features">Features</a>
+      <a href="/chat">Try It</a>
+      <a href="https://github.com/MediatedFlame70/Chat-io" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Multi-Agent Structured Output Chatbot</h1>
+    <p>Ask questions. Get smart answers. In structured format.</p>
+    <div class="buttons">
+      <button class="btn" onclick="window.location.href='/chat'">🔍 Try Chat-IO</button>
+      <button class="btn" onclick="window.location.href='https://github.com/MediatedFlame70/Chat-io'">📘 Learn More</button>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <h2>⚙️ How It Works</h2>
+    <div class="features">
+      <div class="card">
+        <h3>🔍 Research</h3>
+        <p>Fetches data from Wikipedia or SerpAPI.</p>
+      </div>
+      <div class="card">
+        <h3>🧠 Summarize</h3>
+        <p>Uses LLM to compress and clean the content.</p>
+      </div>
+      <div class="card">
+        <h3>📊 Structure</h3>
+        <p>Outputs well-organized JSON format data.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <h2>🚀 Features</h2>
+    <div class="features">
+      <div class="card">
+        <h3>Modular Agents</h3>
+        <p>Customize or extend each stage independently.</p>
+      </div>
+      <div class="card">
+        <h3>Clean UI</h3>
+        <p>Streamlit frontend or web-based interface.</p>
+      </div>
+      <div class="card">
+        <h3>Real-Time Queries</h3>
+        <p>Live research + structured output.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    Chat-IO © 2025 · Built with ❤️ By Team NPC
+  </div>
+
+</body>
 </html>
