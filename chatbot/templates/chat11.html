@@ -6,52 +6,30 @@
   <title>Chat-IO</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-
     body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
       background: linear-gradient(135deg, #050d1a 0%, #0a1934 50%, #050d1a 100%);
       color: #e0e0e0;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      line-height: 1.6;
+      padding-top: 50px;
     }
 
-    header {
-      background-color: rgba(14, 17, 23, 0.9);
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #1f2229;
+    .logo-container {
       position: fixed;
-      width: 100%;
-      top: 0;
+      top: 20px;
+      left: 30px;
       z-index: 100;
     }
 
     .logo {
+      font-size: 1.3rem;
+      font-weight: bold;
       color: #4A90E2;
-      font-size: 1.8rem;
-      font-weight: 600;
-      text-decoration: none;
       cursor: pointer;
-    }
-
-    nav a {
-      margin-left: 20px;
-      color: #CCCCCC;
       text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #69FF94;
     }
 
     .main-container {
@@ -61,7 +39,6 @@
       justify-content: center;
       padding: 2rem;
       flex: 1;
-      margin-top: 80px;
     }
 
     .main-text {
@@ -69,7 +46,6 @@
       font-weight: 600;
       margin-bottom: 2rem;
       color: #69FF94;
-      text-align: center;
     }
 
     .input-container {
@@ -168,10 +144,55 @@
       color: #69FF94;
     }
 
+    .response-content {
+      margin-bottom: 1rem;
+    }
+
+    .response-structured {
+      background-color: #262730;
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    .loader {
+      display: none;
+      margin-top: 2rem;
+      width: 50px;
+      height: 24px;
+      background: linear-gradient(#4A90E2 0 0) left/20% 100% no-repeat,
+                  linear-gradient(#4A90E2 0 0) center/20% 100% no-repeat,
+                  linear-gradient(#4A90E2 0 0) right/20% 100% no-repeat;
+      animation: load 1s infinite;
+    }
+
+    @keyframes load {
+      0% {background-size: 20% 100%, 20% 100%, 20% 100%}
+      33% {background-size: 20% 10%, 20% 100%, 20% 100%}
+      50% {background-size: 20% 100%, 20% 10%, 20% 100%}
+      66% {background-size: 20% 100%, 20% 100%, 20% 10%}
+      100% {background-size: 20% 100%, 20% 100%, 20% 100%}
+    }
+
+    @media (max-width: 600px) {
+      .main-text {
+        font-size: 1.3rem;
+      }
+      .input-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      .icon-group {
+        width: 100%;
+        justify-content: space-around;
+      }
+    }
+
     .formatted-response {
       line-height: 1.6;
       color: #e0e0e0;
-      margin-bottom: 1rem;
     }
 
     .formatted-response h1 {
@@ -205,87 +226,12 @@
     .formatted-response a:hover {
       text-decoration: underline;
     }
-
-    .response-structured {
-      background-color: #262730;
-      border-radius: 8px;
-      padding: 1rem;
-      font-family: monospace;
-      white-space: pre-wrap;
-      display: none;
-    }
-
-    .loader {
-      display: none;
-      margin-top: 2rem;
-      width: 50px;
-      height: 24px;
-      background: linear-gradient(#4A90E2 0 0) left/20% 100% no-repeat,
-                  linear-gradient(#4A90E2 0 0) center/20% 100% no-repeat,
-                  linear-gradient(#4A90E2 0 0) right/20% 100% no-repeat;
-      animation: load 1s infinite;
-    }
-
-    @keyframes load {
-      0% {background-size: 20% 100%, 20% 100%, 20% 100%}
-      33% {background-size: 20% 10%, 20% 100%, 20% 100%}
-      50% {background-size: 20% 100%, 20% 10%, 20% 100%}
-      66% {background-size: 20% 100%, 20% 100%, 20% 10%}
-      100% {background-size: 20% 100%, 20% 100%, 20% 100%}
-    }
-
-    .footer {
-      text-align: center;
-      padding: 30px;
-      font-size: 0.9rem;
-      border-top: 1px solid #1f2229;
-      color: #666;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        padding: 15px 20px;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      nav {
-        margin-top: 15px;
-        width: 100%;
-      }
-      
-      nav a {
-        margin: 0 10px 0 0;
-      }
-      
-      .main-text {
-        font-size: 1.3rem;
-      }
-      
-      .input-container {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-      }
-      
-      .icon-group {
-        width: 100%;
-        justify-content: space-around;
-      }
-    }
   </style>
 </head>
 <body>
-  <header>
+  <div class="logo-container">
     <a href="/" class="logo">🤖 Chat-IO</a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/#how">How it Works</a>
-      <a href="/#features">Features</a>
-      <a href="/chat">Try It</a>
-      <a href="https://github.com/MediatedFlame70/Chat-io" target="_blank">GitHub</a>
-    </nav>
-  </header>
+  </div>
 
   <div class="main-container">
     <div class="main-text">What can I help with?</div>
@@ -306,13 +252,9 @@
         <div class="response-title" id="response-title">Query Result</div>
         <div class="response-source" id="response-source">Source: Unknown</div>
       </div>
-      <div class="formatted-response" id="response-summary"></div>
+      <div class="response-content" id="response-summary"></div>
       <div class="response-structured" id="response-structured"></div>
     </div>
-  </div>
-
-  <div class="footer">
-    Chat-IO © 2025 · Built with ❤️ By Team NPC
   </div>
 
   <script>
@@ -363,10 +305,8 @@
 
       } catch (err) {
         console.error("Error calling backend:", err);
-        document.getElementById('response-summary').innerHTML = 
-          `<div class="formatted-response"><h1>Error</h1><p>Failed to reach server. Please try again later.</p></div>`;
+        alert("Failed to reach server. Please try again later.");
         document.getElementById('loader').style.display = 'none';
-        document.getElementById('response-container').style.display = 'block';
       }
     });
 
